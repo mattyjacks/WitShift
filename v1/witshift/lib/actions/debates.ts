@@ -1,6 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
+import { redirect } from "next/navigation";
+
 export async function createDebate(formData: FormData) {
   "use server";
   const supabase = await createClient();
@@ -8,9 +10,10 @@ export async function createDebate(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error("Not authenticated");
   if (!title) throw new Error("Title required");
-  const { error } = await supabase.from("debates").insert({ title, created_by: user.id });
+  const { data, error } = await supabase.from("debates").insert({ title, created_by: user.id }).select("id").single();
   if (error) throw error;
   revalidatePath("/debates");
+  redirect(`/debates/${data.id}`);
 }
 
 export async function listDebates() {
