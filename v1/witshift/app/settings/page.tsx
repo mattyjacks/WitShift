@@ -21,7 +21,7 @@ async function updateDisplayName(formData: FormData) {
   redirect("/settings?updated=1");
 }
 
-export default async function SettingsPage({ searchParams }: { searchParams: Record<string, string | string[]> }) {
+export default async function SettingsPage({ searchParams = {} as Record<string, string | string[] | undefined> }: { searchParams?: Record<string, string | string[] | undefined> } = {}) {
   const supabase = await createClient();
   const {
     data: { user },
@@ -33,7 +33,7 @@ export default async function SettingsPage({ searchParams }: { searchParams: Rec
     .eq("id", user.id)
     .maybeSingle();
   const currentName = profile?.display_name || "";
-  const updated = searchParams.updated;
+  const updated = searchParams?.updated;
   return (
     <div className="max-w-md mx-auto p-6 space-y-4">
       <h1 className="text-2xl font-bold">Account Settings</h1>
