@@ -3,9 +3,26 @@ import VoiceField from "@/components/voice-field";
 import CooldownTimer from "@/components/cooldown-timer";
 import { notFound } from "next/navigation";
 
+type Profile = { display_name: string | null };
+type PostRow = {
+  id: string;
+  content_text: string | null;
+  audio_url: string | null;
+  transcript: string | null;
+  profiles: Profile | Profile[] | null;
+};
+
+function getDisplayName(p: { profiles: Profile | Profile[] | null }): string {
+  const prof = p.profiles;
+  if (!prof) return "Anonymous";
+  if (Array.isArray(prof)) return prof[0]?.display_name ?? "Anonymous";
+  return prof.display_name ?? "Anonymous";
+}
+
 export default async function DebateThread({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const { debate, posts } = await getDebateWithPosts(id);
+  const typedPosts: PostRow[] = posts;
   const supabase = await (await import("@/lib/supabase/server")).createClient();
   const { data: { user } } = await supabase.auth.getUser();
   const unlockAt = user ? await (await import("@/lib/actions/debates")).getCooldown(id, user.id) : null;
@@ -22,9 +39,9 @@ export default async function DebateThread({ params }: { params: Promise<{ id: s
     <div className="max-w-2xl mx-auto p-6 space-y-6">
       <h1 className="text-2xl font-bold">{debate.title}</h1>
       <ul className="space-y-4">
-        {posts.map((p) => (
+        {typedPosts.map((p) => (
           <li key={p.id} className="border p-3 rounded">
-            <p className="text-xs text-gray-500 mb-1">{Array.isArray((p as any).profiles) ? (p as any).profiles[0]?.display_name : (p as any).profiles?.display_name || "Anonymous"}</p>
+            <p className="text-xs text-gray-500 mb-1">{getDisplayName(p)}</p>
             {p.content_text && <p>{p.content_text}</p>}
             {p.audio_url && (
               <audio controls src={p.audio_url} className="mt-2 w-full" />
