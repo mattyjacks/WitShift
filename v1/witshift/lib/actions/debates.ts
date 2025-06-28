@@ -1,6 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 
 export async function createDebate(formData: FormData) {
   "use server";
