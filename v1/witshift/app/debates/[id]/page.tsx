@@ -1,4 +1,5 @@
 import { getDebateWithPosts, createPost } from "@/lib/actions/debates";
+import VoiceField from "@/components/voice-field";
 import { notFound } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
@@ -9,7 +10,8 @@ export default async function DebateThread({ params }: { params: { id: string } 
   async function serverAction(formData: FormData) {
     "use server";
     const content = String(formData.get("content") || "");
-    await createPost({ debateId: params.id, contentText: content });
+    const audioUrl = String(formData.get("audioUrl") || "");
+    await createPost({ debateId: params.id, contentText: content || undefined, audioUrl: audioUrl || undefined });
   }
 
   return (
@@ -35,6 +37,7 @@ export default async function DebateThread({ params }: { params: { id: string } 
           rows={3}
           className="border p-2 rounded"
         />
+        <VoiceField />
         <button type="submit" className="bg-black text-white rounded px-4 py-2">
           Post reply
         </button>
