@@ -22,8 +22,7 @@ async function updateDisplayName(formData: FormData) {
   redirect("/settings?updated=1");
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default async function SettingsPage({ searchParams }: any) {
+export default async function SettingsPage({ searchParams }: { searchParams: Promise<Record<string, string | string[]> | undefined> }) {
   const supabase = await createClient();
   const {
     data: { user },
@@ -35,7 +34,8 @@ export default async function SettingsPage({ searchParams }: any) {
     .eq("id", user.id)
     .maybeSingle();
   const currentName = profile?.display_name || "";
-  const updated = searchParams?.updated as string | undefined;
+  const sp = (await searchParams) || {};
+  const updated = sp.updated as string | undefined;
   return (
     <div className="max-w-md mx-auto p-6 space-y-4">
       <h1 className="text-2xl font-bold">Account Settings</h1>
