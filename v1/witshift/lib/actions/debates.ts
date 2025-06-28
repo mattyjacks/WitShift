@@ -18,12 +18,20 @@ export async function createDebate(formData: FormData) {
 
 export async function listDebates() {
   const supabase = await createClient();
-  const { data, error } = await supabase
+  const { data: debates, error } = await supabase
     .from("debates")
-    .select("id, title, created_at, profiles(display_name)")
+    .select("id, title, created_at, created_by")
     .order("created_at", { ascending: false });
   if (error) throw error;
-  return data;
+  if (!debates) return [];
+  const userIds = debates.map((d) => d.created_by);
+  const { data: profiles } = await supabase
+    .from("profiles")
+    .select("id, display_name")
+    .in("id", userIds);
+  const map: Record<string, string | null> = {};
+  profiles?.forEach((p) => (map[p.id] = p.display_name));
+  return debates.map((d) => ({ ...d, display_name: map[d.created_by] || null }));
 }
 
 export async function getCooldown(debateId: string, userId: string) {
@@ -41,13 +49,23 @@ export async function getDebateWithPosts(id: string) {
   const supabase = await createClient();
   const { data: debate, error: dErr } = await supabase.from("debates").select("*").eq("id", id).single();
   if (dErr) throw dErr;
-  const { data: posts, error: pErr } = await supabase
+  const { data: postsRaw, error: pErr } = await supabase
     .from("posts")
-    .select("*, profiles:author_id(display_name)")
+    .select("*")
     .eq("debate_id", id)
     .order("created_at", { ascending: true });
   if (pErr) throw pErr;
-  return { debate, posts };
+  const posts = postsRaw || [];
+  const authorIds = posts.map((p) => p.author_id);
+  const { data: profiles } = await supabase
+    .from("profiles")
+    .select("id, display_name")
+    .in("id", authorIds);
+  const pMap: Record<string, string | null> = {};
+  profiles?.forEach((p) => (pMap[p.id] = p.display_name));
+  const postsWithName = posts.map((p) => ({ ...p, display_name: pMap[p.author_id] || null }));
+  if (pErr) throw pErr;
+  return { debate, posts: postsWithName };
 }
 
 export async function createPost({ debateId, parentId, contentText, audioUrl }: { debateId: string; parentId?: string | null; contentText?: string; audioUrl?: string; }) {
