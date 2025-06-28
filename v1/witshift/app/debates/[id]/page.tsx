@@ -1,10 +1,14 @@
 import { getDebateWithPosts, createPost } from "@/lib/actions/debates";
 import VoiceField from "@/components/voice-field";
+import CooldownTimer from "@/components/cooldown-timer";
 import { notFound } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
 export default async function DebateThread({ params }: { params: { id: string } }) {
   const { debate, posts } = await getDebateWithPosts(params.id);
+  const supabase = await (await import("@/lib/supabase/server")).createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  const unlockAt = user ? await (await import("@/lib/actions/debates")).getCooldown(params.id, user.id) : null;
   if (!debate) notFound();
 
   async function serverAction(formData: FormData) {
@@ -30,7 +34,8 @@ export default async function DebateThread({ params }: { params: { id: string } 
           </li>
         ))}
       </ul>
-      <form action={serverAction} className="flex flex-col gap-2 border-t pt-4">
+      <CooldownTimer unlockAt={unlockAt?.toISOString() ?? null} />
+      <form action={serverAction} className="flex flex-col gap-2 border-t pt-4" aria-disabled={Boolean(unlockAt && unlockAt > new Date())}>
         <textarea
           name="content"
           placeholder="Your reply"
@@ -38,7 +43,7 @@ export default async function DebateThread({ params }: { params: { id: string } 
           className="border p-2 rounded"
         />
         <VoiceField />
-        <button type="submit" className="bg-black text-white rounded px-4 py-2">
+        <button type="submit" disabled={Boolean(unlockAt && unlockAt > new Date())} className="bg-black text-white rounded px-4 py-2 disabled:opacity-50">
           Post reply
         </button>
       </form>

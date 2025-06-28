@@ -21,6 +21,17 @@ export async function listDebates() {
   return data;
 }
 
+export async function getCooldown(debateId: string, userId: string) {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("cooldowns")
+    .select("unlock_at")
+    .eq("debate_id", debateId)
+    .eq("user_id", userId)
+    .maybeSingle();
+  return data?.unlock_at ? new Date(data.unlock_at) : null;
+}
+
 export async function getDebateWithPosts(id: string) {
   const supabase = await createClient();
   const { data: debate, error: dErr } = await supabase.from("debates").select("*").eq("id", id).single();
