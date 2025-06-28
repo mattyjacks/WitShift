@@ -2,18 +2,20 @@
 import { useEffect, useState } from "react";
 
 export default function CooldownTimer({ unlockAt }: { unlockAt: string | null }) {
-  if (!unlockAt) return null;
-  const unlockDate = new Date(unlockAt);
-  const [remaining, setRemaining] = useState(() => unlockDate.getTime() - Date.now());
+  const unlockDate = unlockAt ? new Date(unlockAt) : null;
+  const [remaining, setRemaining] = useState(() =>
+    unlockDate ? Math.max(unlockDate.getTime() - Date.now(), 0) : 0,
+  );
 
   useEffect(() => {
+    if (!unlockDate) return;
     const id = setInterval(() => {
       setRemaining(unlockDate.getTime() - Date.now());
     }, 1000);
     return () => clearInterval(id);
-  }, [unlockAt]);
+  }, [unlockAt, unlockDate]);
 
-  if (remaining <= 0) return null;
+  if (!unlockDate || remaining <= 0) return null;
   const mins = Math.floor(remaining / 60000);
   const secs = Math.floor((remaining % 60000) / 1000);
   return (

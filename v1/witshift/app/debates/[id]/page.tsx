@@ -2,7 +2,6 @@ import { getDebateWithPosts, createPost } from "@/lib/actions/debates";
 import VoiceField from "@/components/voice-field";
 import CooldownTimer from "@/components/cooldown-timer";
 import { notFound } from "next/navigation";
-import { revalidatePath } from "next/cache";
 
 export default async function DebateThread({ params }: { params: { id: string } }) {
   const { debate, posts } = await getDebateWithPosts(params.id);
@@ -35,7 +34,7 @@ export default async function DebateThread({ params }: { params: { id: string } 
         ))}
       </ul>
       <CooldownTimer unlockAt={unlockAt?.toISOString() ?? null} />
-      <form action={serverAction} className="flex flex-col gap-2 border-t pt-4" aria-disabled={Boolean(unlockAt && unlockAt > new Date())}>
+      <form action={serverAction} className="flex flex-col gap-2 border-t pt-4">
         <textarea
           name="content"
           placeholder="Your reply"
