@@ -3,18 +3,19 @@ import VoiceField from "@/components/voice-field";
 import CooldownTimer from "@/components/cooldown-timer";
 import { notFound } from "next/navigation";
 
-export default async function DebateThread({ params }: { params: { id: string } }) {
-  const { debate, posts } = await getDebateWithPosts(params.id);
+export default async function DebateThread({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const { debate, posts } = await getDebateWithPosts(id);
   const supabase = await (await import("@/lib/supabase/server")).createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  const unlockAt = user ? await (await import("@/lib/actions/debates")).getCooldown(params.id, user.id) : null;
+  const unlockAt = user ? await (await import("@/lib/actions/debates")).getCooldown(id, user.id) : null;
   if (!debate) notFound();
 
   async function serverAction(formData: FormData) {
     "use server";
     const content = String(formData.get("content") || "");
     const audioUrl = String(formData.get("audioUrl") || "");
-    await createPost({ debateId: params.id, contentText: content || undefined, audioUrl: audioUrl || undefined });
+    await createPost({ debateId: id, contentText: content || undefined, audioUrl: audioUrl || undefined });
   }
 
   return (
