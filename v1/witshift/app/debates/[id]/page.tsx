@@ -24,7 +24,8 @@ export default async function DebateThread({ params }: { params: Promise<{ id: s
       <ul className="space-y-4">
         {posts.map((p) => (
           <li key={p.id} className="border p-3 rounded">
-            <p>{p.content_text}</p>
+            <p className="text-xs text-gray-500 mb-1">{Array.isArray((p as any).profiles) ? (p as any).profiles[0]?.display_name : (p as any).profiles?.display_name || "Anonymous"}</p>
+            {p.content_text && <p>{p.content_text}</p>}
             {p.audio_url && (
               <audio controls src={p.audio_url} className="mt-2 w-full" />
             )}

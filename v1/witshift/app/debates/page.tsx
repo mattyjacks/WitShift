@@ -15,7 +15,9 @@ export default async function DebatesPage() {
         {debates.map((d) => (
           <li key={d.id} className="border p-3 rounded">
             <Link href={`/debates/${d.id}`}>{d.title}</Link>
-            <p className="text-xs text-gray-500">{new Date(d.created_at).toLocaleString()}</p>
+            <p className="text-xs text-gray-500">
+              {Array.isArray((d as any).profiles) ? (d as any).profiles[0]?.display_name : (d as any).profiles?.display_name || "Anonymous"} · {new Date(d.created_at).toLocaleString()}
+            </p>
           </li>
         ))}
       </ul>

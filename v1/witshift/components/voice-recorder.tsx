@@ -107,6 +107,18 @@ export default function VoiceRecorder({ onRecorded }: Props) {
             {uploading ? "Uploading…" : "Upload"}
           </button>
         )}
+        {recordedUrl && (
+          <button
+            type="button"
+            onClick={() => {
+              setRecordedUrl(null);
+              setRecordedBlob(null);
+            }}
+            className="px-3 py-1 rounded bg-gray-300 text-black"
+          >
+            Discard
+          </button>
+        )}
         {status === "recording" && (
           <span className="text-xs text-gray-600 ml-2">
             {Math.floor(timeLeft / 60000)}:{String(Math.floor((timeLeft % 60000) / 1000)).padStart(2, '0')} left

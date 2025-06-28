@@ -18,7 +18,10 @@ export async function createDebate(formData: FormData) {
 
 export async function listDebates() {
   const supabase = await createClient();
-  const { data, error } = await supabase.from("debates").select("id, title, created_at").order("created_at", { ascending: false });
+  const { data, error } = await supabase
+    .from("debates")
+    .select("id, title, created_at, profiles(display_name)")
+    .order("created_at", { ascending: false });
   if (error) throw error;
   return data;
 }
@@ -38,7 +41,11 @@ export async function getDebateWithPosts(id: string) {
   const supabase = await createClient();
   const { data: debate, error: dErr } = await supabase.from("debates").select("*").eq("id", id).single();
   if (dErr) throw dErr;
-  const { data: posts, error: pErr } = await supabase.from("posts").select("*").eq("debate_id", id).order("created_at", { ascending: true });
+  const { data: posts, error: pErr } = await supabase
+    .from("posts")
+    .select("*, profiles:author_id(display_name)")
+    .eq("debate_id", id)
+    .order("created_at", { ascending: true });
   if (pErr) throw pErr;
   return { debate, posts };
 }
