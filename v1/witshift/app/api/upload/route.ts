@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/server";
 import { v4 as uuid } from "uuid";
 
@@ -18,22 +19,21 @@ export async function OPTIONS() {
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient();
-  // For storage insert we need service role if RLS blocks anon. Replace client if env provided.
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  const adminSupabase = serviceKey
-    ? createClient() // placeholder, we'll import
+  const uploadClient = serviceKey
+    ? createSupabaseClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, serviceKey)
     : supabase;
   const filename = `${uuid()}.webm`;
 
   const arrayBuffer = await req.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
 
-  const { error } = await supabase.storage.from("voice").upload(filename, buffer, {
+  const { error } = await uploadClient.storage.from("voice").upload(filename, buffer, {
     contentType: "audio/webm",
   });
   if (error) {
     return NextResponse.json({ error: "upload failed" }, { status: 500, headers: { "Access-Control-Allow-Origin": "*" } });
   }
-  const { data } = supabase.storage.from("voice").getPublicUrl(filename);
+  const { data } = uploadClient.storage.from("voice").getPublicUrl(filename);
   return NextResponse.json({ url: data.publicUrl }, { headers: { "Access-Control-Allow-Origin": "*" } });
 }
