@@ -11,6 +11,7 @@ export default function VoiceRecorder({ onRecorded }: Props) {
   const [timeLeft, setTimeLeft] = useState<number>(MAX_DURATION_MS);
   const timerRef = useRef<number | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [uploaded, setUploaded] = useState(false);
   const [recordedUrl, setRecordedUrl] = useState<string | null>(null);
   const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null);
 
@@ -22,6 +23,7 @@ export default function VoiceRecorder({ onRecorded }: Props) {
   } = useReactMediaRecorder({ audio: true });
 
   useEffect(() => {
+    setUploaded(false);
     if (mediaBlobUrl) {
       fetch(mediaBlobUrl)
         .then(res => res.blob())
@@ -81,6 +83,7 @@ export default function VoiceRecorder({ onRecorded }: Props) {
     setUploading(false);
     if (json.url) {
       onRecorded(json.url);
+      setUploaded(true);
     } else {
       alert("Upload failed");
     }
@@ -97,7 +100,7 @@ export default function VoiceRecorder({ onRecorded }: Props) {
         >
           {status === "recording" ? "Stop" : "Record"}
         </button>
-        {recordedUrl && (
+        {recordedUrl && !uploaded && (
           <button
             type="button"
             onClick={handleUpload}
@@ -107,7 +110,10 @@ export default function VoiceRecorder({ onRecorded }: Props) {
             {uploading ? "Uploading…" : "Upload"}
           </button>
         )}
-        {recordedUrl && (
+        {uploaded && (
+          <span className="px-3 py-1 rounded bg-green-700/50 text-white">Uploaded</span>
+        )}
+        {recordedUrl && !uploaded && (
           <button
             type="button"
             onClick={() => {

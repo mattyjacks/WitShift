@@ -9,14 +9,11 @@ type PostRow = {
   content_text: string | null;
   audio_url: string | null;
   transcript: string | null;
-  profiles: Profile | Profile[] | null;
+  display_name: string | null;
 };
 
-function getDisplayName(p: { profiles: Profile | Profile[] | null }): string {
-  const prof = p.profiles;
-  if (!prof) return "Anonymous";
-  if (Array.isArray(prof)) return prof[0]?.display_name ?? "Anonymous";
-  return prof.display_name ?? "Anonymous";
+function getDisplayName(p: { display_name: string | null }): string {
+  return p.display_name || "Anonymous";
 }
 
 export default async function DebateThread({ params }: { params: Promise<{ id: string }> }) {
