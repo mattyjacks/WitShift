@@ -3,7 +3,6 @@ import VoiceField from "@/components/voice-field";
 import CooldownTimer from "@/components/cooldown-timer";
 import { notFound } from "next/navigation";
 
-type Profile = { display_name: string | null };
 type PostRow = {
   id: string;
   content_text: string | null;
