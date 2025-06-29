@@ -18,6 +18,11 @@ export async function OPTIONS() {
 
 export async function POST(req: NextRequest) {
   const supabase = await createClient();
+  // For storage insert we need service role if RLS blocks anon. Replace client if env provided.
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const adminSupabase = serviceKey
+    ? createClient() // placeholder, we'll import
+    : supabase;
   const filename = `${uuid()}.webm`;
 
   const arrayBuffer = await req.arrayBuffer();
