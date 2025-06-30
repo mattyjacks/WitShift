@@ -17,9 +17,10 @@ function getDisplayName(p: { display_name: string | null }): string {
   return p.display_name || "Anonymous";
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
   const supabase = await (await import("@/lib/supabase/server")).createClient();
-  const { data: debate } = await supabase.from("debates").select("title").eq("id", params.id).single();
+  const { data: debate } = await supabase.from("debates").select("title").eq("id", id).single();
   const titlePart = debate?.title ? debate.title.slice(0, 50) : "Debate";
   const fullTitle = `WitShift: ${titlePart}`;
   const desc = debate?.title ? `${debate.title.slice(0, 50)} – Join the debate on WitShift.` : "Debate on WitShift.";
