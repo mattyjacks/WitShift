@@ -26,7 +26,7 @@ export default function NavBar() {
   return (
     <nav className="w-full border-b mb-6">
       <div className="max-w-5xl mx-auto px-4 flex items-center h-12 gap-4">
-        <Link href="/" className={linkClass("/")}>Home</Link>
+        <Link href="/" className="font-bold text-lg mr-4">WitShift</Link>
         <Link href="/debates" className={linkClass("/debates")}>Debates</Link>
         <Link href="/settings" className={linkClass("/settings")}>Settings</Link>
         <div className="ml-auto flex gap-2">
