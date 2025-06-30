@@ -12,7 +12,7 @@ export default function Home() {
         <section className="w-full py-24 bg-gradient-to-r from-sky-500 to-indigo-600 text-white text-center">
           <h1 className="text-5xl font-extrabold tracking-tight mb-4">WitShift</h1>
           <p className="text-xl max-w-2xl mx-auto">
-            A turn-based, voice-first debating arena where every reply counts—and every
+            A turn-based, voice-first debating arena with ChatGPT Judgements where every
             move locks you out for an hour. Think before you speak.
           </p>
           <div className="mt-8 flex justify-center gap-4">
