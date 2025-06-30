@@ -76,11 +76,11 @@ export default function Home() {
               </p>
               <ul className="list-disc pl-5 text-sm text-gray-800 mb-3">
                 <li><strong>Personality:</strong> Happiness, Sadness, Hope, Anger, Curiosity, Empathy, Conciseness, Boldness, Logical Rigour, Humor, Diplomacy, Creativity, Confidence, Open-Mindedness</li>
-                <li><strong>Opinions:</strong> A summary of your positions on topics you've debated, helping others understand your perspective</li>
+                <li><strong>Opinions:</strong> A summary of your positions on topics you&apos;ve debated, helping others understand your perspective</li>
                 <li><strong>Knowledge:</strong> Subject areas where you demonstrate expertise and accuracy</li>
               </ul>
               <p className="text-sm text-gray-800">
-                Add custom traits to track, and discover debaters with similar or complementary profiles to yours—perfect for finding intellectual sparring partners or allies.
+                Add custom traits to track, and discover debaters with similar, complementary, or competitive profiles to yours—perfect for finding intellectual sparring partners or allies.
               </p>
             </div>
           </div>
