@@ -30,14 +30,14 @@ export default function Home() {
               { icon: Mic2, title: "Voice Recording", desc: "Speak your mind with crystal-clear audio clips." },
               { icon: Sparkles, title: "Avatar Halo", desc: "Animated glow reacts to your voice’s volume and pitch." },
               { icon: Users, title: "Targeted Challenges", desc: "Call out individuals or groups to a public sparring match." },
-              { icon: Brain, title: "AI Judgement", desc: 'ChatGPT decides "Who won the debate?" and explains why.' },
+              { icon: Brain, title: "ChatGPT Judgement", desc: 'ChatGPT decides "Who won the debate?" and explains why.' },
               { icon: Users, title: "Limited Arena", desc: "Only 10 debaters & 25 messages keep things concise." },
-              { icon: Mic2, title: "OpenAI Whisper Transcription", desc: "High-accuracy speech-to-text preserves tone & content." },
+              { icon: Mic2, title: "OpenAI Transcription", desc: "High-accuracy speech-to-text with OpenAI Whisper preserves tone & content." },
               { icon: ShieldCheck, title: "Safety from Extremism", desc: "Automated moderation shields you from hateful content." },
-              { icon: Sparkles, title: "Points & Fame", desc: "Earn upvotes, legendary status & ChatGPT Judgement scorecards." },
+              { icon: Sparkles, title: "Points & Fame", desc: "Earn upvotes, legendary statuses & Machine Spirit Achievements." },
               { icon: MessageSquare, title: "Threaded Depth", desc: "Replies stack like chess moves, keeping arguments clear." },
               { icon: FileText, title: "Text Context", desc: "Embed links, citations & comments alongside your voice." },
-              { icon: Badge, title: "Avatar Frames", desc: "Unlock rare avatar frames by completing challenges." },
+              { icon: Badge, title: "Unlockable Cosmetics", desc: "Unlock rare avatar frames and more by completing challenges." },
             ].map((f) => (
               <div key={f.title} className="p-6 bg-white rounded-lg shadow hover:shadow-md transition-shadow">
                 <f.icon className="h-8 w-8 text-sky-600 mb-4" />
