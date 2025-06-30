@@ -1,4 +1,5 @@
 import { getDebateWithPosts, createPost } from "@/lib/actions/debates";
+import Link from "next/link";
 import VoiceField from "@/components/voice-field";
 import CooldownTimer from "@/components/cooldown-timer";
 import { notFound } from "next/navigation";
@@ -49,18 +50,22 @@ export default async function DebateThread({ params }: { params: Promise<{ id: s
         ))}
       </ul>
       <CooldownTimer unlockAt={unlockAt?.toISOString() ?? null} />
-      <form action={serverAction} className="flex flex-col gap-2 border-t pt-4">
-        <textarea
-          name="content"
-          placeholder="Your reply"
-          rows={3}
-          className="border p-2 rounded"
-        />
-        <VoiceField />
-        <button type="submit" disabled={Boolean(unlockAt && unlockAt > new Date())} className="bg-black text-white rounded px-4 py-2 disabled:opacity-50">
-          Post reply
-        </button>
-      </form>
+      {user ? (
+        <form action={serverAction} className="flex flex-col gap-2 border-t pt-4">
+          <textarea
+            name="content"
+            placeholder="Your reply"
+            rows={3}
+            className="border p-2 rounded"
+          />
+          <VoiceField />
+          <button type="submit" disabled={Boolean(unlockAt && unlockAt > new Date())} className="bg-black text-white rounded px-4 py-2 disabled:opacity-50">
+            Post reply
+          </button>
+        </form>
+      ) : (
+        <p className="border-t pt-4 text-sm">Sign in to <Link href="/auth/login" className="underline">post reply</Link></p>
+      )}
     </div>
   );
 }
