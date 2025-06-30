@@ -26,8 +26,8 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-center mb-12">Why you’ll love WitShift</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { icon: Clock, title: "60-min Cooldown", desc: "Post once, wait an hour—quality over quantity." },
-              { icon: Mic2, title: "Voice Recording", desc: "Speak your mind with crystal-clear audio clips." },
+              { icon: Clock, title: "60-min Cooldown", desc: "Post once, wait 60 minutes unless someone responds first." },
+              { icon: Mic2, title: "Voice Recording", desc: "Speak your mind with crystal-clear audio clips, up to 5 minutes." },
               { icon: Sparkles, title: "Vocal Avatar", desc: "Animations of your avatar reacts to your voice’s volume and pitch." },
               { icon: Users, title: "Targeted Challenges", desc: "Call out individuals or groups to a public sparring match." },
               { icon: Brain, title: "ChatGPT Judgements", desc: 'ChatGPT decides "Who won the debate?" and explains why.' },
