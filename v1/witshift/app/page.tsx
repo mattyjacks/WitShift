@@ -80,14 +80,14 @@ export default function Home() {
                 <li><strong>Knowledge:</strong> Subject areas where you demonstrate expertise and accuracy</li>
               </ul>
               <p className="text-sm text-gray-800">
-                Add custom traits to track, and discover debaters with similar, complementary, or competitive profiles to yours—perfect for finding intellectual sparring partners or allies.
+                Add custom traits to track, and discover debaters with similar, complementary, or competitive profiles to yours, perfect for finding intellectual sparring partners or allies.
               </p>
             </div>
           </div>
           <div className="bg-gradient-to-r from-sky-100 to-indigo-100 p-6 rounded-lg">
             <h3 className="font-semibold text-lg mb-2 text-center">How It Works</h3>
             <p className="text-sm text-gray-800 mb-3 text-center">
-              Our AI judgement system uses carefully crafted prompts designed for neutrality and fairness. Unlike typical AI interactions, we provide complete transparency by showing you the exact instructions given to ChatGPT and its full, unedited response—including its internal reasoning process.
+              Our AI judgement system uses carefully crafted prompts designed for neutrality and fairness. Unlike typical AI interactions, we provide complete transparency by showing you the exact instructions given to ChatGPT and its full, unedited response, including its internal reasoning process.
             </p>
             <p className="text-sm text-gray-800 text-center">
               This approach ensures judgements are based on debate quality rather than political alignment or personal bias, creating a level playing field for all perspectives.
