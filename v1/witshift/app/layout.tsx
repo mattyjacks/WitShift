@@ -10,8 +10,18 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "WitShift: Debate Arena!",
+  description: "WitShift is a turn-based, voice-first debate arena where every move locks you out for an hour—think before you speak.",
+  openGraph: {
+    title: "WitShift: Debate Arena!",
+    description: "Join the time-pressured voice debate arena. Make your point, then wait an hour— quality over quantity.",
+    url: defaultUrl,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "WitShift: Debate Arena!",
+    description: "Turn-based voice debates with a 60-minute cooldown. Join the discourse on WitShift.",
+  },
 };
 
 const geistSans = Geist({

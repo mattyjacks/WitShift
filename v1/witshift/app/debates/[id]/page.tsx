@@ -1,4 +1,5 @@
 import { getDebateWithPosts, createPost } from "@/lib/actions/debates";
+import type { Metadata } from "next";
 import Link from "next/link";
 import VoiceField from "@/components/voice-field";
 import CooldownTimer from "@/components/cooldown-timer";
@@ -14,6 +15,20 @@ type PostRow = {
 
 function getDisplayName(p: { display_name: string | null }): string {
   return p.display_name || "Anonymous";
+}
+
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const supabase = await (await import("@/lib/supabase/server")).createClient();
+  const { data: debate } = await supabase.from("debates").select("title").eq("id", params.id).single();
+  const titlePart = debate?.title ? debate.title.slice(0, 50) : "Debate";
+  const fullTitle = `WitShift: ${titlePart}`;
+  const desc = debate?.title ? `${debate.title.slice(0, 50)} – Join the debate on WitShift.` : "Debate on WitShift.";
+  return {
+    title: fullTitle,
+    description: desc,
+    openGraph: { title: fullTitle, description: desc },
+    twitter: { title: fullTitle, description: desc },
+  };
 }
 
 export default async function DebateThread({ params }: { params: Promise<{ id: string }> }) {
