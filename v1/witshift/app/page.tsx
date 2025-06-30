@@ -2,7 +2,7 @@ import { AuthButton } from "@/components/auth-button";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import Link from "next/link";
 
-import { Sparkles, Mic2, Clock, Users, MessageSquare, ShieldCheck } from "lucide-react";
+import { Sparkles, Mic2, Clock, Users, MessageSquare, ShieldCheck, Brain, FileText, Badge } from "lucide-react";
 
 export default function Home() {
   return (
@@ -26,12 +26,18 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-center mb-12">Why you’ll love WitShift</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { icon: Clock, title: "60-min Cooldown", desc: "Post a move and you’re benched for an hour—quality over quantity." },
-              { icon: Mic2, title: "Voice + Transcript", desc: "Record tone-rich clips with automatic Whisper transcription." },
+              { icon: Clock, title: "60-min Cooldown", desc: "Post once, wait an hour—quality over quantity." },
+              { icon: Mic2, title: "Voice Recording", desc: "Speak your mind with crystal-clear audio clips." },
               { icon: Sparkles, title: "Avatar Halo", desc: "Animated glow reacts to your voice’s volume and pitch." },
               { icon: Users, title: "Targeted Challenges", desc: "Call out individuals or groups to a public sparring match." },
+              { icon: Brain, title: "AI Judgement", desc: 'ChatGPT decides "Who won the debate?" and explains why.' },
+              { icon: Users, title: "Limited Arena", desc: "Only 10 debaters & 25 messages keep things concise." },
+              { icon: Mic2, title: "OpenAI Whisper transcription", desc: "High-accuracy speech-to-text preserves tone & content." },
+              { icon: ShieldCheck, title: "Safety from Extremism", desc: "Automated moderation shields you from hateful content." },
+              { icon: Sparkles, title: "Points & Fame", desc: "Earn upvotes, legendary status & ChatGPT scorecards." },
               { icon: MessageSquare, title: "Threaded Depth", desc: "Replies stack like chess moves, keeping arguments clear." },
-              { icon: ShieldCheck, title: "Moderation Ready", desc: "RLS policies, profanity checks and report flow built-in." },
+              { icon: FileText, title: "Text Context", desc: "Embed links, citations & comments alongside your voice." },
+              { icon: Badge, title: "Avatar Frames", desc: "Unlock rare avatar frames by completing challenges." },
             ].map((f) => (
               <div key={f.title} className="p-6 bg-white rounded-lg shadow hover:shadow-md transition-shadow">
                 <f.icon className="h-8 w-8 text-sky-600 mb-4" />
