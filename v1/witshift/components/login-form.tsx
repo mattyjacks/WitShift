@@ -24,6 +24,9 @@ export function LoginForm({
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
+  const [resendMessage, setResendMessage] = useState<string | null>(null);
+  const [resendError, setResendError] = useState<string | null>(null);
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -44,6 +47,31 @@ export function LoginForm({
       setError(error instanceof Error ? error.message : "An error occurred");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleResend = async () => {
+    if (!email) return;
+    setResendLoading(true);
+    setResendMessage(null);
+    setResendError(null);
+    const supabase = createClient();
+    try {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const { error: resendError } = await supabase.auth.resend({
+        type: "signup",
+        email,
+        options: {
+          emailRedirectTo: `https://witshift.vercel.app/protected`,
+        },
+      });
+      if (resendError) throw resendError;
+      setResendMessage("Confirmation email sent. Please check your inbox.");
+    } catch (err: any) {
+      setResendError(err?.message ?? "Failed to resend confirmation email.");
+    } finally {
+      setResendLoading(false);
     }
   };
 
@@ -91,6 +119,25 @@ export function LoginForm({
               {error && <p className="text-sm text-red-500">{error}</p>}
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? "Logging in..." : "Login"}
+              </Button>
+              {resendMessage && (
+                <p className="text-sm text-green-600 dark:text-green-400 mt-2">
+                  {resendMessage}
+                </p>
+              )}
+              {resendError && (
+                <p className="text-sm text-red-600 dark:text-red-400 mt-2">
+                  {resendError}
+                </p>
+              )}
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full mt-4"
+                onClick={handleResend}
+                disabled={resendLoading || !email}
+              >
+                {resendLoading ? "Sending..." : "Resend Confirmation Email"}
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
