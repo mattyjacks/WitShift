@@ -68,8 +68,12 @@ export function LoginForm({
       });
       if (resendError) throw resendError;
       setResendMessage("Confirmation email sent. Please check your inbox.");
-    } catch (err: any) {
-      setResendError(err?.message ?? "Failed to resend confirmation email.");
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+        return;
+      }
+      setError("Failed to resend confirmation email.");
     } finally {
       setResendLoading(false);
     }

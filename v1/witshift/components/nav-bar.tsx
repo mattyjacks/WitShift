@@ -13,7 +13,7 @@ export default function NavBar() {
       setUser(session?.user ?? null);
     });
     return () => listener?.subscription.unsubscribe();
-  }, []);
+  });
 
   const logout = async () => {
     await supabase.auth.signOut();

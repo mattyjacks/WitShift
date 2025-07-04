@@ -1,8 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function CooldownTimer({ unlockAt }: { unlockAt: string | null }) {
-  const unlockDate = unlockAt ? new Date(unlockAt) : null;
+  const unlockDate = useMemo(() => unlockAt ? new Date(unlockAt) : null, [unlockAt]);
   const [remaining, setRemaining] = useState(() =>
     unlockDate ? Math.max(unlockDate.getTime() - Date.now(), 0) : 0,
   );
