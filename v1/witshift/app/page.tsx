@@ -10,7 +10,7 @@ export default function Home() {
       <div className="flex-1 w-full flex flex-col gap-20 items-center">
         {/* Hero */}
         <section className="w-full py-24 bg-gradient-to-r from-sky-500 to-indigo-600 text-white text-center">
-          <h1 className="text-5xl font-extrabold tracking-tight mb-4">WitShift</h1>
+          <h1 className="text-5xl font-extrabold tracking-tight mb-4">SpeechFight</h1>
           <p className="text-xl max-w-2xl mx-auto">
             A turn-based, voice-first debating arena with ChatGPT Judgements where every
             move locks you out for an hour. Think before you speak.
@@ -23,7 +23,7 @@ export default function Home() {
 
         {/* Features */}
         <section className="max-w-5xl mx-auto px-4 py-20">
-          <h2 className="text-3xl font-bold text-center mb-12">Why you’ll love WitShift</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">Why you’ll love SpeechFight</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               { icon: Clock, title: "60-min Cooldown", desc: "Post once, wait 60 minutes unless someone responds first." },

@@ -1,13 +1,13 @@
-# WitShift – Functional Specification
+# SpeechFight – Functional Specification
 
 _Last updated: June 28 2025_
 
 ---
 
 ## 1. Product Vision
-WitShift is a **turn-based, voice-centric social network for civil debate**.  Each reply inside a thread starts a **60-minute cooldown** for the author, forcing reflection and discouraging dog-piling.  Users can post short text or voice clips; voice is automatically transcribed with OpenAI Whisper and accompanied by a live avatar halo that visualises vocal intensity.
+SpeechFight is a **turn-based, voice-centric social network for civil debate**.  Each reply inside a thread starts a **60-minute cooldown** for the author, forcing reflection and discouraging dog-piling.  Users can post short text or voice clips; voice is automatically transcribed with OpenAI Whisper and accompanied by a live avatar halo that visualises vocal intensity.
 
-Success for WitShift is measured by:
+Success for SpeechFight is measured by:
 • Average daily debates created
 • % of replies that are voice
 • Completion rate of 3-turn exchanges
@@ -153,6 +153,6 @@ Component highlights:
 
 ---
 
-_WitShift aims to raise the discourse level online by injecting **time, tone, and transparency** into every argument._
+_SpeechFight aims to raise the discourse level online by injecting **time, tone, and transparency** into every argument._
 
-WitShift is an app about debating eachother in a turn based way....
+SpeechFight is an app about debating eachother in a turn based way....

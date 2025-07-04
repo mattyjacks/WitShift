@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const supabase = await (await import("@/lib/supabase/server")).createClient();
   const { data: debate } = await supabase.from("debates").select("title").eq("id", id).single();
   const titlePart = debate?.title ? debate.title.slice(0, 50) : "Debate";
-  const fullTitle = `WitShift: ${titlePart}`;
-  const desc = debate?.title ? `${debate.title.slice(0, 50)} – Join the debate on WitShift.` : "Debate on WitShift.";
+  const fullTitle = `SpeechFight: ${titlePart}`;
+  const desc = debate?.title ? `${debate.title.slice(0, 50)} – Join the debate on SpeechFight.` : "Debate on SpeechFight.";
   return {
     title: fullTitle,
     description: desc,

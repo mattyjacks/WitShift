@@ -1,4 +1,4 @@
--- WitShift initial schema
+-- SpeechFight initial schema
 -- Users table comes from Supabase auth users
 
 create table if not exists public.debates (
